@@ -1,9 +1,9 @@
 # Contatos
 
-*************SE ERRO NO DOCKER
-*************remover o docker
-*************instalar novamente
-*************abrir o aplicativo docker desktop e logar nele
+*************SE ERRO NO DOCKER   
+*************remover o docker   
+*************instalar novamente   
+*************abrir o aplicativo docker desktop e logar nele   
 
 
 baixar a imagem: docker pull postgres
