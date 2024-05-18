@@ -24,7 +24,7 @@ CREATE TABLE regiao (
 CREATE TABLE contato (
   id serial PRIMARY KEY,
   nome varchar(255),
-  telefone varchar(10),
+  telefone varchar(15),
   email varchar(100),
   ddd int4,
   FOREIGN KEY (ddd) REFERENCES regiao(ddd)
