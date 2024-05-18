@@ -4,13 +4,13 @@ using Contatos.Infra.Services.Interfaces;
 
 namespace Contatos.Infra.Services
 {
-    public class ContatoServices : IServices<Contato>
+    public class ContatoServices : IContatoServices
     {
-        private readonly IRepository<Contato> _repository;
+        private readonly IContatoRepository _repository;
 
-        public ContatoServices(IRepository<Contato> repository)
+        public ContatoServices(IContatoRepository repository)
         {
-            _repository = repository;
+            _repository = repository;           
         }
 
         public async Task CreateAsync(Contato model, CancellationToken cancellationToken)
@@ -31,6 +31,11 @@ namespace Contatos.Infra.Services
         public async Task<IEnumerable<Contato>> GetAllAsync(CancellationToken cancellationToken)
         {
             return await _repository.GetAllAsync(cancellationToken);
+        }
+
+        public async Task<IEnumerable<Contato>> GetAllAsync(int? ddd, CancellationToken cancellationToken)
+        {
+            return await _repository.GetAllAsync(ddd, cancellationToken);
         }
 
         public async Task<Contato> GetByIdAsync(int id, CancellationToken cancellationToken)

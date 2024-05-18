@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Contatos.Infra.Repositories
 {
-    public class ContatoRepository : IRepository<Contato>
+    public class ContatoRepository : IContatoRepository
     {
         private readonly IDbConnection _dbConnection;
 
@@ -48,23 +48,7 @@ namespace Contatos.Infra.Repositories
 
         public async Task<IEnumerable<Contato>> GetAllAsync(CancellationToken cancellationToken)
         {
-            cancellationToken.ThrowIfCancellationRequested();
-
-            var strbQuery = new StringBuilder();
-            strbQuery.Append(@"
-                select * from contato c
-                inner join regiao r on r.ddd = c.ddd ");
-
-            return await _dbConnection.QueryAsync<Contato, Regiao, Contato>
-            (
-                strbQuery.ToString(),
-                map: (contato, regiao) =>
-                {
-                    contato.Regiao = regiao;
-                    return contato;
-                },
-                splitOn: "id,ddd"
-            );
+            return await this.GetAllAsync(null, cancellationToken);
         }
 
         public async Task<Contato> GetByIdAsync(int id, CancellationToken cancellationToken)
@@ -92,6 +76,35 @@ namespace Contatos.Infra.Repositories
             );
 
             return result.FirstOrDefault();
+        }
+
+        public async Task<IEnumerable<Contato>> GetAllAsync(int? ddd, CancellationToken cancellationToken)
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+
+            var parameters = new DynamicParameters();
+            var strbQuery = new StringBuilder();
+            strbQuery.Append(@"
+                select * from contato c
+                inner join regiao r on r.ddd = c.ddd ");
+
+            if (ddd is not null)
+            {
+                parameters.Add("@ddd", ddd.Value, DbType.Int32, ParameterDirection.Input);
+                strbQuery.Append(" WHERE c.ddd=@ddd ");
+            }
+
+            return await _dbConnection.QueryAsync<Contato, Regiao, Contato>
+            (
+                strbQuery.ToString(),
+                param: parameters,
+                map: (contato, regiao) =>
+                {
+                    contato.Regiao = regiao;
+                    return contato;
+                },
+                splitOn: "id,ddd"
+            );
         }
     }
 }

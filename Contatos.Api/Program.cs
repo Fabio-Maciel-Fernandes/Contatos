@@ -17,9 +17,9 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IServices<Regiao>, RegiaoServices>();
-builder.Services.AddScoped<IServices<Contato>, ContatoServices>();
+builder.Services.AddScoped<IContatoServices, ContatoServices>();
 builder.Services.AddScoped<IRepository<Regiao>, RegiaoRepository>();
-builder.Services.AddScoped<IRepository<Contato>, ContatoRepository>();
+builder.Services.AddScoped<IContatoRepository, ContatoRepository>();
 DefaultTypeMap.MatchNamesWithUnderscores = true;
 
 var connectionString = configuration.GetValue<string>("ConnectionStringPostgres");

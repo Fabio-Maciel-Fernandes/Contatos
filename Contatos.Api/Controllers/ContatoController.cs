@@ -11,9 +11,9 @@ namespace Contatos.Api.Controllers
     [AllowAnonymous]
     public class ContatoController : ControllerBase
     {
-        private readonly IServices<Contato> _contatoService;
+        private readonly IContatoServices _contatoService;
 
-        public ContatoController(IServices<Contato> contatoService)
+        public ContatoController(IContatoServices contatoService)
         {
             _contatoService = contatoService;
         }
@@ -22,13 +22,22 @@ namespace Contatos.Api.Controllers
         [ProducesResponseType(typeof(IEnumerable<Contato>), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.NoContent)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        public async Task<IActionResult> GetAllAsync(CancellationToken cancellationToken)
+        public async Task<IActionResult> GetAllAsync(int? ddd, CancellationToken cancellationToken)
         {
-            var resultado = await _contatoService.GetAllAsync(cancellationToken);
+            IEnumerable<Contato> contatos;
 
-            if (resultado.Any())
+            if (ddd is not null)
             {
-                return Ok(resultado);
+                contatos = await _contatoService.GetAllAsync(ddd, cancellationToken);
+            }
+            else
+            {
+                contatos = await _contatoService.GetAllAsync(cancellationToken);
+            }
+
+            if (contatos.Any())
+            {
+                return Ok(contatos);
             }
             else
             {
