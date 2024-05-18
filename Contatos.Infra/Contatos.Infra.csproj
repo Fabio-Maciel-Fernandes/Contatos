@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Dapper.Contrib" Version="2.0.78" />
+		<PackageReference Include="Dapper.SimpleCRUD" Version="2.3.0" />
+		<PackageReference Include="Npgsql" Version="8.0.3" />
+		<ProjectReference Include="..\Contatos.Core\Contatos.Core.csproj" />
+		<ProjectReference Include="..\Contatos.Shared\Contatos.Shared.csproj" />
+	</ItemGroup>
+
+</Project>
