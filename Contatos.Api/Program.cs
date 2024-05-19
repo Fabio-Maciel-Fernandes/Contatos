@@ -1,3 +1,4 @@
+using Contatos.Api.Middlewares;
 using Contatos.Core.Models;
 using Contatos.Infra.Repositories;
 using Contatos.Infra.Repositories.Interfaces;
@@ -20,6 +21,11 @@ builder.Services.AddScoped<IServices<Regiao>, RegiaoServices>();
 builder.Services.AddScoped<IContatoServices, ContatoServices>();
 builder.Services.AddScoped<IRepository<Regiao>, RegiaoRepository>();
 builder.Services.AddScoped<IContatoRepository, ContatoRepository>();
+builder.Services.AddExceptionHandler<ExceptionHandler>();
+builder.Services.AddProblemDetails();
+builder.Services.AddMemoryCache();
+builder.Services.AddScoped<ICacheService, CacheService>();
+
 DefaultTypeMap.MatchNamesWithUnderscores = true;
 
 var connectionString = configuration.GetValue<string>("ConnectionStringPostgres");
@@ -39,5 +45,7 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseExceptionHandler();
 
 app.Run();

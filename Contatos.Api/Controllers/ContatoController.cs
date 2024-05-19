@@ -2,6 +2,7 @@
 using Contatos.Infra.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Data;
 using System.Net;
 
 namespace Contatos.Api.Controllers
@@ -33,7 +34,7 @@ namespace Contatos.Api.Controllers
             else
             {
                 contatos = await _contatoService.GetAllAsync(cancellationToken);
-            }
+            }           
 
             if (contatos.Any())
             {
