@@ -1,6 +1,7 @@
 ﻿using Contatos.Core.Models;
 using Contatos.Infra.Repositories.Interfaces;
 using Contatos.Infra.Services.Interfaces;
+using System.ComponentModel.DataAnnotations;
 
 namespace Contatos.Infra.Services
 {
@@ -18,7 +19,15 @@ namespace Contatos.Infra.Services
 
         public async Task CreateAsync(Regiao model, CancellationToken cancellationToken)
         {
-            await _repository.CreateAsync(model, cancellationToken);
+            if (model.Ok())
+            {
+                await _repository.CreateAsync(model, cancellationToken);
+            }
+            else
+            {
+                throw new ValidationException(model.ErrrsString());
+            }
+            
         }
 
         public async Task DeleteAsync(int id, CancellationToken cancellationToken)
@@ -34,18 +43,26 @@ namespace Contatos.Infra.Services
         public async Task<IEnumerable<Regiao>> GetAllAsync(CancellationToken cancellationToken)
         {
             return await _cacheServices.GetOrCreateAsync(CHAVE_CACHE_REGIAO,
-                 () => _repository.GetAllAsync(cancellationToken));             
+                 () => _repository.GetAllAsync(cancellationToken));
         }
 
         public async Task<Regiao> GetByIdAsync(int id, CancellationToken cancellationToken)
         {
             return await _cacheServices.GetOrCreateAsync(CHAVE_CACHE_REGIAO + id,
-                 () => _repository.GetByIdAsync(id, cancellationToken));           
+                 () => _repository.GetByIdAsync(id, cancellationToken));
         }
 
         public async Task UpdateAsync(Regiao model, CancellationToken cancellationToken)
         {
-            await _repository.UpdateAsync(model, cancellationToken);
+            if (model.Ok())
+            {
+                await _repository.UpdateAsync(model, cancellationToken);
+            }
+            else
+            {
+                throw new ValidationException(model.ErrrsString());
+            }
+
         }
     }
 }

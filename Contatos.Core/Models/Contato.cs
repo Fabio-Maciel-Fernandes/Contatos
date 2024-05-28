@@ -1,19 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
+using Contatos.Shared.Extensions;
 
 namespace Contatos.Core.Models
 {
-    public class Contato
+    public class Contato : ModelBase
     {
-        public Contato() 
+        public Contato()
         {
             Regiao = new Regiao();
         }
-
         public int id { get; set; }
         [Required(ErrorMessage = "Nome obrigatório.")]
         [MaxLength(255)]
@@ -22,10 +17,10 @@ namespace Contatos.Core.Models
         [MaxLength(15)]
         public string Telefone { get; set; }
         [MaxLength(100)]
-        [Required(ErrorMessage = "Email obrigatório.")]        
+        [Required(ErrorMessage = "Email obrigatório.")]
         [EmailAddress(ErrorMessage = "Email inválido.")]
-        public string Email { get; set;}
+        public string Email { get; set; }
         [Required]
-        public Regiao Regiao { get; set; }
+        public Regiao Regiao { get; set; }     
     }
 }

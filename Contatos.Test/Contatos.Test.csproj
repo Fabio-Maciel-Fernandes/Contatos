@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -10,22 +10,26 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="coverlet.collector" Version="6.0.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
-    <PackageReference Include="NUnit" Version="3.14.0" />
-    <PackageReference Include="NUnit.Analyzers" Version="3.9.0" />
-    <PackageReference Include="NUnit3TestAdapter" Version="4.5.0" />
+    <PackageReference Include="Moq" Version="4.20.70" />
+    <PackageReference Include="Moq.Dapper" Version="1.0.7" />
+    <PackageReference Include="xunit" Version="2.8.1" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.8.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>  
+  
   </ItemGroup>
 
-  <ItemGroup>
-    <Using Include="NUnit.Framework" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Core\" />
-    <Folder Include="Infra\" />
-    <Folder Include="Api\" />
+    <ItemGroup>
     <Folder Include="Shared\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Contatos.Api\Contatos.Api.csproj" />
+    <ProjectReference Include="..\Contatos.Core\Contatos.Core.csproj" />
+    <ProjectReference Include="..\Contatos.Infra\Contatos.Infra.csproj" />
+    <ProjectReference Include="..\Contatos.Shared\Contatos.Shared.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,8 +1,10 @@
 ﻿using Contatos.Infra.Services.Interfaces;
 using Microsoft.Extensions.Caching.Memory;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Contatos.Infra.Services
 {
+    [ExcludeFromCodeCoverage]
     public class CacheService : ICacheService
     {
         private readonly IMemoryCache _cache;

@@ -1,6 +1,8 @@
 ﻿using Contatos.Core.Models;
 using Contatos.Infra.Repositories.Interfaces;
 using Contatos.Infra.Services.Interfaces;
+using Contatos.Shared.Extensions;
+using System.ComponentModel.DataAnnotations;
 
 namespace Contatos.Infra.Services
 {
@@ -15,7 +17,14 @@ namespace Contatos.Infra.Services
 
         public async Task CreateAsync(Contato model, CancellationToken cancellationToken)
         {
-            await _repository.CreateAsync(model, cancellationToken);
+            if (model.Ok())
+            {
+                await _repository.CreateAsync(model, cancellationToken);
+            }
+            else
+            {
+                throw new ValidationException(model.ObterErros());
+            }
         }
 
         public async Task DeleteAsync(int id, CancellationToken cancellationToken)
@@ -45,7 +54,14 @@ namespace Contatos.Infra.Services
 
         public async Task UpdateAsync(Contato model, CancellationToken cancellationToken)
         {
-            await _repository.UpdateAsync(model, cancellationToken);    
+            if (model.Ok())
+            {
+                await _repository.UpdateAsync(model, cancellationToken);
+            }
+            else
+            {
+                throw new ValidationException(model.ObterErros());
+            }              
         }
     }
 }

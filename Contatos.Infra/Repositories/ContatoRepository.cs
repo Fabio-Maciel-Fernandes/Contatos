@@ -2,10 +2,12 @@
 using Contatos.Infra.Repositories.Interfaces;
 using Dapper;
 using System.Data;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 
 namespace Contatos.Infra.Repositories
 {
+    [ExcludeFromCodeCoverage]
     public class ContatoRepository : IContatoRepository
     {
         private readonly IDbConnection _dbConnection;

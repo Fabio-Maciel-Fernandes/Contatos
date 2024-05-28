@@ -1,21 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Contatos.Core.Models
 {
-    public class Regiao
+    public class Regiao : ModelBase
     {
         [Required(ErrorMessage = "DDD obrigatório.")]
+        [Range(minimum: 11, maximum: 99)]
         public int DDD { get; set; }
         [Required(ErrorMessage = "Nome obrigatório.")]
         [MaxLength(50)]
         public string Nome { get; set; }
         [Required(ErrorMessage = "Estado obrigatório.")]
         [MaxLength(50)]
-        public string Estado { get; set;}
+        public string Estado { get; set; }       
     }
 }
