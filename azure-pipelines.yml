@@ -1,0 +1,84 @@
+trigger:
+- '*' 
+
+resources:
+- repo: self 
+ 
+variables:
+  buildConfiguration: 'Release'
+  # Container registry service connection established during pipeline creation
+  dockerRegistryServiceConnection: '20a938dc-3d70-4ca0-beaa-4f41aac3aa12'
+  imageRepository: 'contatos'
+  containerRegistry: 'registrofiap.azurecr.io'
+  dockerfilePath: '$(Build.SourcesDirectory)/Dockerfile'
+  tag: '$(Build.BuildId)'
+
+stages:
+  - stage: build
+    displayName: 'build'
+    jobs:
+      - job: BuildJob
+        displayName: 'Job de build'
+        pool:
+          vmImage: windows-latest
+        steps:
+        - script: dotnet build --configuration $(buildConfiguration)
+          displayName: 'dotnet build $(buildConfiguration)'
+        - task: VSTest@2
+          displayName: 'Etapa Testes'
+          inputs:
+            platform: '$(buildPlatform)'
+            configuration: '$(buildConfiguration)'
+        - task: DotNetCoreCLI@2
+          condition: succeeded()
+          displayName: 'Etapa de Publicação'
+          inputs:
+            command: publish
+            publishWebProjects: True
+            arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+            zipAfterPublish: True
+
+        # this code takes all the files in $(Build.ArtifactStagingDirectory) and uploads them as an artifact of your build.
+        - task: PublishPipelineArtifact@1
+          condition: succeeded()
+          inputs:
+            targetPath: '$(Build.ArtifactStagingDirectory)' 
+            artifactName: 'apiContatos'
+
+  - stage: Desenvolvimento
+    dependsOn: build
+    condition: succeeded()
+    displayName: 'Desenvolvimento'
+    jobs:
+      - deployment: deploy
+        displayName: 'Job de Deploy'
+        environment: 'dsv'
+        pool:
+          vmImage: ubuntu-latest
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - download: current
+                  artifact: apiContatos
+                - script: echo 'deploy Desenvolvimento'
+                  displayName: 'Deploy on Desenvolvimento'
+                  
+  - stage: Producao
+    dependsOn: Desenvolvimento
+    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+    displayName: 'Produção'
+    jobs:
+      - deployment: deploy
+        displayName: 'Job de Deploy'
+        environment: 'prd' 
+        pool:
+          vmImage: ubuntu-latest
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - download: current
+                  artifact: apiContatos
+                - script: echo 'deploy prd'
+                  displayName: 'Deploy on PRD'
