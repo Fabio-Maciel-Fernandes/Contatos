@@ -20,7 +20,7 @@ namespace Contatos.Infra.Services
         {
             _client = new HttpClient
             {
-                BaseAddress = new Uri("https://4.228.125.204") // URL base da API
+                BaseAddress = new Uri("http://4.228.125.204") // URL base da API
             };
 
             this.factory = new ConnectionFactory()
