@@ -24,10 +24,10 @@ namespace Contatos.Infra.Services
                 BaseAddress = new Uri("http://msregiaoapipod-service.default.svc.cluster.local")
             };
 
-            this.factory = new ConnectionFactory()
-            {
-                Uri = new Uri("amqps://nzosfmoq:uZNH48guR3ZZzmTWib0KoeZUYFICSQI7@fly.rmq.cloudamqp.com/nzosfmoq")
-            };
+            //this.factory = new ConnectionFactory()
+            //{
+             //   Uri = new Uri("amqps://nzosfmoq:uZNH48guR3ZZzmTWib0KoeZUYFICSQI7@fly.rmq.cloudamqp.com/nzosfmoq")
+            //};
         }
 
         public async Task CreateAsync(Regiao model, CancellationToken cancellationToken)
@@ -54,6 +54,7 @@ namespace Contatos.Infra.Services
 
         public async Task<IEnumerable<Regiao>> GetAllAsync(CancellationToken cancellationToken)
         {
+            Console.WriteLine(_client.BaseAddress);
             var response = await _client.GetAsync("/api/Regiao/GetAllAsync");
 
             if (response.StatusCode == HttpStatusCode.OK)
