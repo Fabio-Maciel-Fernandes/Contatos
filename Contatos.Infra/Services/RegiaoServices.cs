@@ -20,7 +20,7 @@ namespace Contatos.Infra.Services
         {
             _client = new HttpClient
             {
-                BaseAddress = new Uri("https://regioes.azurewebsites.net") // URL base da API
+                BaseAddress = new Uri("https://msregiaoapipod-service") // URL base da API
             };
 
             this.factory = new ConnectionFactory()
