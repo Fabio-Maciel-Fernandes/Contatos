@@ -15,7 +15,7 @@ namespace Contatos.Api.Middlewares
 
         public async ValueTask<bool> TryHandleAsync(HttpContext httpContext, Exception exception, CancellationToken cancellationToken)
         {
-            _logger.LogError(exception, $"Ocorreu um erro na aplicação: {exception.ObterMensagens()}");
+            //_logger.LogError(exception, $"Ocorreu um erro na aplicação: {exception.ObterMensagens()}");
 
             var problemDetails = new ProblemDetails
             {
