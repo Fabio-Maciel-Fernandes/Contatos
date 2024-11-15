@@ -23,7 +23,7 @@ jobs:
       uses: azure/k8s-set-context@v1
       with:
         method: kubeconfig
-        kubeconfig: ${{ secrets.KUBE_CONFIG_NEW }}
+        kubeconfig: ${{ secrets.KUBE_CONFIG }}
         version: 1.21.0
 
     - name: Fazer login no registro Docker
