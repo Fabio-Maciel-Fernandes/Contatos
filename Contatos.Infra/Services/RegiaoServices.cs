@@ -21,7 +21,7 @@ namespace Contatos.Infra.Services
             _client = new HttpClient
             {
                 //BaseAddress = new Uri("http://msregiaoapipod-service") // URL base da API
-                BaseAddress = new Uri("http://msregiaoapipod-service.default.svc.cluster.local");
+                BaseAddress = new Uri("http://msregiaoapipod-service.default.svc.cluster.local")
             };
 
             this.factory = new ConnectionFactory()
