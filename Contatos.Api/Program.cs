@@ -25,16 +25,16 @@ public class Program
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
-        builder.Services.AddScoped<IServices<Regiao>, RegiaoServices>();
-        builder.Services.AddScoped<IContatoServices, ContatoServices>();
-        builder.Services.AddScoped<IServices<Compilacao>, CompilacaoServices>();
-        builder.Services.AddScoped<IRepository<Regiao>, RegiaoRepository>();
-        builder.Services.AddScoped<IContatoRepository, ContatoRepository>();
-        builder.Services.AddScoped<IRepository<Compilacao>, CompilacaoRepository>();
+        builder.Services.AddTransient<IServices<Regiao>, RegiaoServices>();
+        builder.Services.AddTransient<IContatoServices, ContatoServices>();
+        builder.Services.AddTransient<IServices<Compilacao>, CompilacaoServices>();
+        builder.Services.AddTransient<IRepository<Regiao>, RegiaoRepository>();
+        builder.Services.AddTransient<IContatoRepository, ContatoRepository>();
+        builder.Services.AddTransient<IRepository<Compilacao>, CompilacaoRepository>();
         builder.Services.AddExceptionHandler<ExceptionHandler>();
         builder.Services.AddProblemDetails();
         builder.Services.AddMemoryCache();
-        builder.Services.AddScoped<ICacheService, CacheService>();
+        builder.Services.AddTransient<ICacheService, CacheService>();
         builder.Services.AddApplicationInsightsTelemetry();
 
         builder.Services.AddHealthChecks();
