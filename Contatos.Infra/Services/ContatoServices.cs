@@ -21,7 +21,7 @@ namespace Contatos.Infra.Services
         {
             _client = new HttpClient
             {
-                BaseAddress = new Uri("https://mscontatos.azurewebsites.net") // URL base da API
+                BaseAddress = new Uri("https://mscontatoapipod-service") // URL base da API
             };
             _regiaoService = regiaoService;
 
