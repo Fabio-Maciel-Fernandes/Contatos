@@ -21,7 +21,7 @@ namespace Contatos.Infra.Services
         {
             _client = new HttpClient
             {
-                BaseAddress = new Uri("https://mscontatoapipod-service") // URL base da API
+                BaseAddress = new Uri("http://mscontatoapipod-service") // URL base da API
             };
             _regiaoService = regiaoService;
 
@@ -75,7 +75,8 @@ namespace Contatos.Infra.Services
         }
 
         public async Task<IEnumerable<Contato>> GetAllAsync(int? ddd, CancellationToken cancellationToken)
-        {
+        {        
+            Console.WriteLine(_client.BaseAddress);
             var response = await _client.GetAsync($"/api/Contato/GetAllAsync?ddd={ddd}");
 
             if (response.StatusCode == HttpStatusCode.OK)
