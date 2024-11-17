@@ -15,7 +15,7 @@ namespace Contatos.Infra.Services
     {
         private HttpClient _client;
         private readonly ConnectionFactory factory;
-        private string url = "http://msregiaoapipod-service";
+        private string url = "http://msregiaoapipod-service.default.svc.cluster.local";
 
         public RegiaoServices()
         {
