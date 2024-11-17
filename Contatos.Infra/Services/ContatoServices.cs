@@ -87,7 +87,6 @@ namespace Contatos.Infra.Services
                     PropertyNameCaseInsensitive = true
                 };
                 List<Contato> contatos = JsonSerializer.Deserialize<List<Contato>>(responseBody, options);
-                this._client.BaseAddress = new Uri("http://msregiaoapipod-service");
                 contatos.ForEach(contato =>
                 {
                     contato.Regiao = _regiaoService.GetByIdAsync(contato.Regiao.DDD, cancellationToken).Result;
