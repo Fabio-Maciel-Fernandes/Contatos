@@ -55,7 +55,11 @@ namespace Contatos.Infra.Services
 
         public async Task<IEnumerable<Regiao>> GetAllAsync(CancellationToken cancellationToken)
         {
-            _client.BaseAddress = new Uri(url);
+            _client = new HttpClient
+            {
+                BaseAddress = new Uri(url) // URL base da API                
+            };
+            
             Console.WriteLine(_client.BaseAddress);
             var response = await _client.GetAsync("/api/Regiao/GetAllAsync");
 
@@ -70,12 +74,18 @@ namespace Contatos.Infra.Services
                 return JsonSerializer.Deserialize<IEnumerable<Regiao>>(responseBody, options);
             }
 
+            Console.WriteLine(response.StatusCode.ToString());
+            Console.WriteLine(response.RequestMessage.ToString());
             return default;
         }
 
         public async Task<Regiao> GetByIdAsync(int ddd, CancellationToken cancellationToken)
         {
-            _client.BaseAddress = new Uri(url);
+            
+            _client = new HttpClient
+            {
+                BaseAddress = new Uri(url) // URL base da API                
+            };
             Console.WriteLine(_client.BaseAddress);
             var response = await _client.GetAsync($"/api/Regiao/{ddd}");
 
@@ -89,6 +99,8 @@ namespace Contatos.Infra.Services
                 // Deserialize the JSON into the C# object
                 return JsonSerializer.Deserialize<Regiao>(responseBody, options);
             }
+            Console.WriteLine(response.StatusCode.ToString());
+            Console.WriteLine(response.RequestMessage.ToString());
             return default;
         }
 
