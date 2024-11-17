@@ -13,14 +13,15 @@ namespace Contatos.Infra.Services
 {
     public class RegiaoServices : IServices<Regiao>
     {
-        private readonly HttpClient _client;
+        private HttpClient _client;
         private readonly ConnectionFactory factory;
+        private string url = "http://msregiaoapipod-service";
 
         public RegiaoServices()
         {
             _client = new HttpClient
             {
-                BaseAddress = new Uri("http://msregiaoapipod-service") // URL base da API
+                BaseAddress = new Uri(url) // URL base da API
                 //BaseAddress = new Uri("http://msregiaoapipod-service.default.svc.cluster.local")
             };
 
@@ -54,6 +55,7 @@ namespace Contatos.Infra.Services
 
         public async Task<IEnumerable<Regiao>> GetAllAsync(CancellationToken cancellationToken)
         {
+            _client.BaseAddress = new Uri(url);
             Console.WriteLine(_client.BaseAddress);
             var response = await _client.GetAsync("/api/Regiao/GetAllAsync");
 
@@ -72,7 +74,9 @@ namespace Contatos.Infra.Services
         }
 
         public async Task<Regiao> GetByIdAsync(int ddd, CancellationToken cancellationToken)
-        {           
+        {
+            _client.BaseAddress = new Uri(url);
+            Console.WriteLine(_client.BaseAddress);
             var response = await _client.GetAsync($"/api/Regiao/{ddd}");
 
             if (response.StatusCode == HttpStatusCode.OK)
