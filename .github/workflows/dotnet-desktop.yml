@@ -42,6 +42,9 @@ jobs:
 
     - name: Implantação no Kubernetes
       run: kubectl apply -f Contatos.Api/deploy/deployment.yaml
+    
+    - name: Atualizando as pods
+      run: kubectl rollout restart deployment contatoapipod
 
 
 
