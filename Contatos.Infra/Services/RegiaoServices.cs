@@ -65,6 +65,8 @@ namespace Contatos.Infra.Services
 
             if (response.StatusCode == HttpStatusCode.OK)
             {
+                Console.WriteLine(response.StatusCode.ToString());
+                Console.WriteLine(response.RequestMessage.ToString());
                 string responseBody = await response.Content.ReadAsStringAsync();
                 var options = new JsonSerializerOptions
                 {
@@ -91,6 +93,8 @@ namespace Contatos.Infra.Services
 
             if (response.StatusCode == HttpStatusCode.OK)
             {
+                Console.WriteLine(response.StatusCode.ToString());
+                Console.WriteLine(response.RequestMessage.ToString());
                 string responseBody = await response.Content.ReadAsStringAsync();
                 var options = new JsonSerializerOptions
                 {
