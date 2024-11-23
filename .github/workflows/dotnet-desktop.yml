@@ -24,7 +24,7 @@ jobs:
     - name: Executar testes
       run: |
         echo "Executando testes..."
-        dotnet test Contatos/Contatos.Test/Contatos.Test.csproj --no-build --verbosity normal
+        dotnet test /home/runner/work/Contatos/Contatos/Contatos.Test/Contatos.Test.csproj --no-build --verbosity normal
 
     - name: Publicar aplicação
       run: dotnet publish -c Release -o ./publish
