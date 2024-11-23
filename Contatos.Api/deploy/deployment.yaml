@@ -2,12 +2,12 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: contatoapipod
-  labels: 
-    app: contatoapipod 
-    environment: production 
-    team: dev 
-    annotations: 
-      description: "Deployment do aplicativo de contatos API"
+  labels:
+    app: contatoapipod
+    environment: production
+    team: dev
+  annotations:
+    description: "Deployment do aplicativo de contatos API"
 spec:
   replicas: 1
   selector:
@@ -17,10 +17,10 @@ spec:
     metadata:
       labels:
         app: contatoapipod
-        environment: production 
-        team: dev 
-        annotations: 
-          description: "Pod do aplicativo de contatos API"
+        environment: production
+        team: dev
+      annotations:
+        description: "Pod do aplicativo de contatos API"
     spec: 
       containers:
       - name: contatoapipod
@@ -34,12 +34,12 @@ apiVersion: v1
 kind: Service
 metadata:
   name: contatoapipod-service
-  labels: 
-    app: contatoapipod 
-    environment: production 
-    team: dev 
-    annotations: 
-      description: "Service para o aplicativo de contatos API"
+  labels:
+    app: contatoapipod
+    environment: production
+    team: dev
+  annotations:
+    description: "Service para o aplicativo de contatos API"
 spec:
   selector:
     app: contatoapipod
@@ -47,4 +47,4 @@ spec:
     - protocol: TCP
       port: 80
       targetPort: 8080
-  type: LoadBalancer 
+  type: LoadBalancer
