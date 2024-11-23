@@ -20,15 +20,12 @@ jobs:
         
     - name: Restaurar pacotes
       run: dotnet restore
-
-    - name: Executar testes
-      run: |
-        echo "Executando testes..."
-        dotnet test /home/runner/work/Contatos/Contatos/Contatos.Test/Contatos.Test.csproj --no-build --verbosity normal
-
+    - name: Build
+      run: dotnet build --no-restore
+    - name: Test
+      run: dotnet test --no-build --verbosity normal      
     - name: Publicar aplicação
       run: dotnet publish -c Release -o ./publish
-
     - name: Set up kubectl
       uses: azure/k8s-set-context@v1
       with:
