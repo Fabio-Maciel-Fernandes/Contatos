@@ -13,15 +13,19 @@ jobs:
     - name: Verificar código
       uses: actions/checkout@v2
 
+    - name: Listar arquivos no diretório
+      run: |
+        echo "Listando arquivos e diretórios..."
+        ls -R
+        
     - name: Restaurar pacotes
       run: dotnet restore
-    - name: Listar arquivos no diretório 
-      run: | 
-        echo "Listando arquivos e diretórios..." ls -R 
-    - name: Restaurar pacotes 
-      run: dotnet restore Contatos/Contatos.Test/Contatos.Test.csproj 
-    - name: Executar testes 
-      run: dotnet test Contatos/Contatos.Test/Contatos.Test.csproj --no-build --verbosity normal
+
+    - name: Executar testes
+      run: |
+        echo "Executando testes..."
+        dotnet test Contatos/Contatos.Test/Contatos.Test.csproj --no-build --verbosity normal
+
     - name: Publicar aplicação
       run: dotnet publish -c Release -o ./publish
 
@@ -33,7 +37,7 @@ jobs:
         version: 1.21.0
 
     - name: Fazer login no registro Docker
-      run: docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_PASSWORD }} 
+      run: docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_PASSWORD }}
 
     - name: Construir imagem Docker
       run: docker build -t fabaofloripa/contatos.api:latest .
@@ -41,20 +45,8 @@ jobs:
     - name: Publicar imagem Docker
       run: docker push fabaofloripa/contatos.api:latest
 
-    - name: Listar arquivos no diretório
-      run: |
-        echo "Executando dir..."
-        dir
-
     - name: Implantação no Kubernetes
       run: kubectl apply -f Contatos.Api/deploy/deployment.yaml
     
     - name: Atualizando as pods
       run: kubectl rollout restart deployment contatoapipod
-
-
-
-
-
-
-
