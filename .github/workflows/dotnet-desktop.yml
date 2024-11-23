@@ -16,6 +16,9 @@ jobs:
     - name: Restaurar pacotes
       run: dotnet restore
 
+    - name: Executar testes 
+      run: dotnet test --no-build --verbosity normal
+
     - name: Publicar aplicação
       run: dotnet publish -c Release -o ./publish
 
