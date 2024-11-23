@@ -15,10 +15,13 @@ jobs:
 
     - name: Restaurar pacotes
       run: dotnet restore
-
+    - name: Listar arquivos no diretório 
+      run: | 
+        echo "Listando arquivos e diretórios..." ls -R 
+    - name: Restaurar pacotes 
+      run: dotnet restore Contatos/Contatos.Test/Contatos.Test.csproj 
     - name: Executar testes 
       run: dotnet test Contatos/Contatos.Test/Contatos.Test.csproj --no-build --verbosity normal
-
     - name: Publicar aplicação
       run: dotnet publish -c Release -o ./publish
 
