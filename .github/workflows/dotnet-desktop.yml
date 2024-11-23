@@ -17,7 +17,7 @@ jobs:
       run: dotnet restore
 
     - name: Executar testes 
-      run: dotnet test Contatos/Contatos.sln --no-build --verbosity normal
+      run: dotnet test Contatos/Contatos.Test/Contatos.Test.csproj --no-build --verbosity normal
 
     - name: Publicar aplicação
       run: dotnet publish -c Release -o ./publish
