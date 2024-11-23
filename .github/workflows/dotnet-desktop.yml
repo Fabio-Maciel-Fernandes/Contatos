@@ -46,4 +46,4 @@ jobs:
       run: kubectl apply -f Contatos.Api/deploy/deployment.yaml
     
     - name: Atualizando as pods
-      run: kubectl rollout restart deployment contatoapipod
+      run: kubectl rollout restart deployment contatoapipod 
