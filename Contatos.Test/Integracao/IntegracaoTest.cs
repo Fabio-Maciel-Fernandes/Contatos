@@ -17,7 +17,7 @@ namespace Contatos.Test.Integracao
             // Configuração do HttpClient
             _client = new HttpClient
             {
-                BaseAddress = new Uri("https://cabelo.azurewebsites.net") // URL base da API
+                BaseAddress = new Uri("http://contatoapipod-service") // URL base da API
             };
         }
 
