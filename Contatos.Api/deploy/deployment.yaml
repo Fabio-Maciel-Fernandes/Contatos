@@ -1,50 +1,84 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: contatoapipod
+  name: medicoapipod
   labels:
-    app: contatoapipod
+    app: medicoapipod
     environment: production
     team: dev
   annotations:
-    description: "Deployment do aplicativo de contatos API"
+    description: "Deployment do aplicativo de medicos API"
 spec:
-  replicas: 1
+  replicas: 1  
   selector:
     matchLabels:
-      app: contatoapipod
+      app: medicoapipod
   template:
     metadata:
       labels:
-        app: contatoapipod
+        app: medicoapipod
         environment: production
         team: dev
       annotations:
-        description: "Pod do aplicativo de contatos API"
-    spec: 
+        description: "Pod do aplicativo de medicos API"
+    spec:
       containers:
-      - name: contatoapipod
-        image: fabaofloripa/contatos.api:latest
+      - name: medicoapipod
+        image: fabaofloripa/msmedico.api:latest
         ports:
           - containerPort: 8080
-  
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+      strategy:
+        type: RollingUpdate
+        rollingUpdate:
+          maxUnavailable: 1
+          maxSurge: 1
+
 ---
 
 apiVersion: v1
 kind: Service
 metadata:
-  name: contatoapipod-service
+  name: medicoapipod-service
   labels:
-    app: contatoapipod
+    app: medicoapipod
     environment: production
     team: dev
   annotations:
-    description: "Service para o aplicativo de contatos API"
+    description: "Service para o aplicativo de medicos API"
 spec:
   selector:
-    app: contatoapipod
+    app: medicoapipod
   ports:
     - protocol: TCP
       port: 80
       targetPort: 8080
-  type: LoadBalancer
+      nodePort: 30101
+  type: NodePort
+
+---
+
+apiVersion: autoscaling/v2beta2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: medicoapipod-autoscaler
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: medicoapipod
+  minReplicas: 1
+  maxReplicas: 20  
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 60
